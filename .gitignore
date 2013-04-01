@@ -1,5 +1,4 @@
 *.o
 .emacs_backups/*
 *.so
-test.cc
 *.d
