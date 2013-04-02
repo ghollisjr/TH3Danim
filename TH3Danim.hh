@@ -93,7 +93,13 @@ public:
       long oldutime = oldtime.tv_sec*1000000+oldtime.tv_nsec/1000;
       long newutime = newtime.tv_sec*1000000+newtime.tv_nsec/1000;
       //if(newutime-oldutime < period) usleep(period+oldutime-newutime);
-      if(newutime-oldutime < period) continue;
+      //if(newutime-oldutime < period) continue;
+      while(newutime-oldutime < period) {
+	const Int_t timeremaining = period+oldutime-newutime;
+	usleep(timeremaining/10);
+	clock_gettime(CLOCK_REALTIME,&newtime);
+	newutime = newtime.tv_sec*1000000+newtime.tv_nsec/1000;
+      }
       /*if(newutime-oldutime < period) {
 	usleep(period/3);
 	continue;
