@@ -59,7 +59,8 @@ public:
     GetYaxis()->SetRange(2,1);
     GetZaxis()->SetRange(2,1);
 
-    delete[] animhists;
+    if(animhists)
+      delete[] animhists;
 
     TAxis* animaxis;
 
