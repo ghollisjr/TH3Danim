@@ -29,6 +29,15 @@ class TH3Danim : public TH3D {
     else remainingaxis = "x";
     return remainingaxis;
   }
+  
+  void free_hists()
+  {
+    for(int i = 0; i < nbins; ++i) {
+      delete animhists[i];
+    }
+    delete[] animhists;
+    animhists=0;
+  }
 
 public:
   TH3Danim(const char* name, const char* title, Int_t nbinsx, Double_t xlo,
@@ -40,7 +49,7 @@ public:
   TH3Danim(const TH3D& h) : animhists(0), TH3D(h) {}
   ~TH3Danim()
   {
-    if(animhists != 0) delete[] animhists;
+    if(animhists != 0) free_hists();
   }
 
   void SetDrawFrequency(Double_t f)
@@ -60,7 +69,7 @@ public:
     GetZaxis()->SetRange(2,1);
 
     if(animhists)
-      delete[] animhists;
+      free_hists();
 
     TAxis* animaxis;
 
